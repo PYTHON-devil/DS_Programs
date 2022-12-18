@@ -1,0 +1,101 @@
+
+#include <iostream>
+using namespace std;
+
+class Node{
+public:
+
+    int data;
+    Node* prev;
+    Node* next;
+};
+
+class Stack{
+private:
+    Node* head=NULL;
+    Node* top=NULL;
+public:
+    void push(int x){
+        Node* n = new Node();
+        n->data = x;
+        if(top==NULL){
+            head = n;
+            top = n;
+            n->prev = NULL;
+            n->next = NULL;
+        }
+        else{
+            top->next = n;
+            n->prev = top;
+            n->next = NULL;
+            top =  n;
+        }
+    }
+    void pop(){
+        if(top==NULL){
+            cout<<"Stack UnderFlow"<<endl;
+        }
+        else{
+            Node* n = top;
+            top = top->prev;
+            free(n);
+        }
+    }
+    void display(){
+        Node* n = top;
+        while(n!=NULL){
+            cout<<n->data<<" ";
+            n = n->prev;
+        }
+        cout<<endl;
+    }
+    bool isEmpty(){
+        if(top==NULL){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    int Top(){
+        return top->data;
+    }
+        
+};
+int main() {
+    Stack stk = Stack();
+    int choice;
+    do{
+        cout<<"1. Push into Stack "<<endl;
+        cout<<"2. Pop From the Stack"<<endl;
+        cout<<"3. Display the Stack"<<endl;
+        cout<<"4. Is Stack Empty"<<endl;
+        cout<<"5. Top of the Stack"<<endl;
+        cout<<"Enter 0 to Exit"<<endl;
+        cout<<"Enter Choice : ";
+        cin>>choice;
+        switch(choice){
+            case 1:
+                int x;
+                cout<<"Enter the variable ";
+                cin>>x;
+                stk.push(x);
+                break;
+            case 2:
+                stk.pop();
+                break;
+            case 3:
+                stk.display();
+                break;
+            case 4:
+                cout<<(bool)stk.isEmpty()<<endl;
+                break;
+            case 5:
+                cout<<stk.Top()<<endl;
+                break;
+                
+                
+        }
+    }while(choice!=0);
+    return 0;
+}
